@@ -376,9 +376,10 @@ class Normalize(DisplayedTransform):
             x,*_ = dl.one_batch()
             self.mean,self.std = x.mean(self.axes, keepdim=True),x.std(self.axes, keepdim=True)+1e-7
 
-    def encodes(self, x:TensorImage): return (x-self.mean) / self.std
+    def encodes(self, x:TensorImage): 
+        return (x-self.mean.to(x.device)) / self.std.to(x.device)
     def decodes(self, x:TensorImage):
         f = to_cpu if x.device.type=='cpu' else noop
-        return (x*f(self.std) + f(self.mean))
+        return (x*f(self.std.to(x.device)) + f(self.mean.to(x.device)))
 
     _docs=dict(encodes="Normalize batch", decodes="Denormalize batch")
