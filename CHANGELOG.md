@@ -2,6 +2,13 @@
 
 <!-- do not remove -->
 
+## 2.7.18
+
+### New Features
+
+- PyTorch 2.5 support
+
+
 ## 2.7.17
 
 ### New Features
